@@ -1,4 +1,6 @@
 const createOption = (query, crypto = '', checkToken = false) => {
+  const defaultRandomCNIP = process.env.ENABLE_RANDOM_CN_IP !== 'false'
+
   return {
     crypto: query.crypto || crypto || '',
     cookie: query.cookie || process.env.NETEASE_COOKIE,
@@ -6,8 +8,8 @@ const createOption = (query, crypto = '', checkToken = false) => {
     proxy: query.proxy,
     realIP: query.realIP,
     randomCNIP:
-      process.env.ENABLE_RANDOM_CN_IP === 'true'
-        ? !['false', false].includes(query.randomCNIP)
+      query.randomCNIP === undefined
+        ? defaultRandomCNIP
         : ['true', true].includes(query.randomCNIP),
     e_r: query.e_r || undefined,
     domain: query.domain || '',
